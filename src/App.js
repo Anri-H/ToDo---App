@@ -1,10 +1,11 @@
 import "./App.css";
+import Todo from "./Components/Todo/Todo"
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1 className={("text-red-600")}>ToDo</h1>
+        <Todo />
       </header>
     </div>
   );
