@@ -6,12 +6,9 @@ import Input from "../Input/Input";
 export default class List extends React.Component {
   state = {};
 
-  editTodo = ({ target }) => {
-    this.setState({ editedTodo: target.value });
-  };
-
   render() {
-    const { todos, deleteItem, complete, edit, saveEdit } = this.props;
+    const { todos, deleteItem, complete, edit, saveEdit, editTodo } =
+      this.props;
 
     return (
       <ul>
@@ -21,32 +18,32 @@ export default class List extends React.Component {
             "border-solid",
             "border-red-600",
             "bg-gray-600",
-            "w-96",
-            "h-14",
             "m-4",
+            "w-96",
+            // "max-w-max",
             "text-left",
             "cursor-pointer",
             { "line-through": isComplete }
           );
           return (
             <li id={id} className={style}>
-              <Button text="Edit" onClick={edit(id)} />
-              <Button text="Delete" onClick={deleteItem(id)} />
-
-              <span className={"m-4"} onClick={complete(id)}>
-                {isEdit ? (
-                  <>
-                    {" "}
-                    <Input type="text" onChange={this.editTodo} />
-                    <Button
-                      text="save"
-                      onClick={saveEdit(id, this.state.editedTodo)}
-                    />{" "}
-                  </>
-                ) : (
-                  text
-                )}
-              </span>
+              {isEdit ? (
+                <>
+                  <Button text="save" onClick={saveEdit(id)} />
+                  <Input type="text" onChange={editTodo} />
+                </>
+              ) : (
+                <>
+                  <Button text="Delete" onClick={deleteItem(id)} />
+                  <span
+                    className={"ml-4"}
+                    onClick={complete(id)}
+                    onDoubleClick={edit(id)}
+                  >
+                    {text}
+                  </span>
+                </>
+              )}
             </li>
           );
         })}
