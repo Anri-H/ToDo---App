@@ -11,7 +11,7 @@ export default class List extends React.Component {
   };
 
   render() {
-    const { todos, deleteItem, complete, edit , saveEdit } = this.props;
+    const { todos, deleteItem, complete, edit, saveEdit } = this.props;
 
     return (
       <ul>
