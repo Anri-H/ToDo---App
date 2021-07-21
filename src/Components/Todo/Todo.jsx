@@ -3,13 +3,28 @@ import Button from "../Button/Button";
 import Input from "../Input/Input";
 import classNames from "classnames";
 import List from "../List/List";
-const titleCSS = classNames("text-red-600", "text-5xl");
+const titleCSS = classNames("text-red-600", "p-6", "mt-8", "text-5xl");
 
 export default class Todo extends React.Component {
   state = {
     todos: [],
     todoInput: "",
     validationMessage: "",
+  };
+
+  handleEditTodo = ({ target }) => {
+    this.setState({ editedTodo: target.value });
+  };
+
+  handleSaveEdit = (id) => (e) => {
+    e.stopPropagation();
+    this.setState(({ todos }) => ({
+      todos: todos.map((item) =>
+        item.id === id
+          ? { ...item, text: this.state.editedTodo, isEdit: !item.isEdit }
+          : item
+      ),
+    }));
   };
 
   handleDelete = (val) => (e) => {
@@ -25,14 +40,6 @@ export default class Todo extends React.Component {
     this.setState(({ todos }) => ({
       todos: todos.map((item) =>
         item.id === id ? { ...item, isEdit: !item.isEdit } : item
-      ),
-    }));
-  };
-
-  handleSaveEdit = (id) => (text) => {
-    this.setState(({ todos }) => ({
-      todos: todos.map((item) =>
-        item.id === id ? { ...item, text: text } : item
       ),
     }));
   };
@@ -78,6 +85,7 @@ export default class Todo extends React.Component {
         <List
           todos={todos}
           complete={this.handleComplete}
+          editTodo={this.handleEditTodo}
           edit={this.handleEdit}
           saveEdit={this.handleSaveEdit}
           deleteItem={this.handleDelete}
