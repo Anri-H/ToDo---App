@@ -3,9 +3,9 @@ import classNames from "classnames";
 
 const style = classNames(
   "outline-none",
-  "p-3",
+  "p-2",
   "text-red-600",
-  "max-w-lg"
+  // "w-96"
 );
 
 export default class Input extends React.Component {
