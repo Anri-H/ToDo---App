@@ -5,10 +5,16 @@ import classNames from "classnames";
 import List from "../List/List";
 const titleCSS = classNames("text-red-600", "p-6", "mt-8", "text-5xl");
 
+const FilterStatuses = {
+  completed: "COMPLETED",
+  all: "ALL",
+  active: "ACTIVE",
+};
 export default class Todo extends React.Component {
   state = {
     todos: JSON.parse(localStorage.getItem("todos")),
     todoInput: "",
+    filterStatus: FilterStatuses.all,
   };
 
   handleEditTodo = ({ target }) => {
@@ -72,12 +78,25 @@ export default class Todo extends React.Component {
     }));
   };
 
+  selectFilter = (filterStatus) => () => {
+    this.setState({
+      filterStatus,
+    });
+  };
+
   render() {
-    const { editedTodo, todoInput, todos } = this.state;
+    const { editedTodo, todoInput, todos, filterStatus } = this.state;
     localStorage.setItem("todos", JSON.stringify(todos ? todos : []));
 
+    const filteredTodos =
+      filterStatus === FilterStatuses.all
+        ? todos
+        : filterStatus === FilterStatuses.active
+        ? todos.filter((t) => !t.isComplete)
+        : todos.filter((t) => t.isComplete);
+
     return (
-      <>
+      <div>
         <h1 className={titleCSS}>ToDo</h1>
         <div className={"flex-row"}>
           <Input
@@ -92,9 +111,13 @@ export default class Todo extends React.Component {
             onClick={this.handleAddTodo}
           />
         </div>
-
+        <div className={"flex justify-around mt-4"}>
+          {Object.entries(FilterStatuses).map(([, value]) => (
+            <Button onClick={this.selectFilter(value)} text={value} />
+          ))}
+        </div>
         <List
-          todos={todos}
+          todos={filteredTodos}
           editedTodo={editedTodo}
           complete={this.handleComplete}
           editTodo={this.handleEditTodo}
@@ -102,7 +125,7 @@ export default class Todo extends React.Component {
           saveEdit={this.handleSaveEdit}
           deleteItem={this.handleDelete}
         />
-      </>
+      </div>
     );
   }
 }
