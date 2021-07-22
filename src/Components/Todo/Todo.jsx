@@ -36,7 +36,7 @@ export default class Todo extends React.Component {
 
   handleEdit = (id, text) => (e) => {
     e.stopPropagation();
-    this.setState(({ todos, todoInput }) => ({
+    this.setState(({ todos }) => ({
       todos: todos.map((item) =>
         item.id === id ? { ...item, isEdit: !item.isEdit } : item
       ),
@@ -64,6 +64,14 @@ export default class Todo extends React.Component {
     }));
   };
 
+  componentDidMount = () => {
+    this.setState(({ todos }) => ({
+      todos: todos.map((item) =>
+        item.isEdit ? { ...item, isEdit: !item.isEdit } : item
+      ),
+    }));
+  };
+
   render() {
     const { editedTodo, todoInput, todos } = this.state;
     localStorage.setItem("todos", JSON.stringify(todos ? todos : []));
@@ -84,6 +92,7 @@ export default class Todo extends React.Component {
             onClick={this.handleAddTodo}
           />
         </div>
+
         <List
           todos={todos}
           editedTodo={editedTodo}
