@@ -9,7 +9,6 @@ export default class Todo extends React.Component {
   state = {
     todos: [],
     todoInput: "",
-    validationMessage: "",
   };
 
   handleEditTodo = ({ target }) => {
@@ -35,13 +34,15 @@ export default class Todo extends React.Component {
     }));
   };
 
-  handleEdit = (id) => (e) => {
-    e.stopPropagation();
-    this.setState(({ todos }) => ({
+  handleEdit = (id, text) => (e) => {
+    e.stopPropagation();    
+    this.setState(({ todos, todoInput }) => ({
       todos: todos.map((item) =>
         item.id === id ? { ...item, isEdit: !item.isEdit } : item
       ),
+      editedTodo: text
     }));
+
   };
 
   handleComplete = (id) => (e) => {
@@ -65,7 +66,7 @@ export default class Todo extends React.Component {
   };
 
   render() {
-    const { todoInput, todos } = this.state;
+    const {editedTodo, todoInput, todos } = this.state;
     return (
       <>
         <h1 className={titleCSS}>ToDo</h1>
@@ -84,6 +85,7 @@ export default class Todo extends React.Component {
         </div>
         <List
           todos={todos}
+          editedTodo={editedTodo}
           complete={this.handleComplete}
           editTodo={this.handleEditTodo}
           edit={this.handleEdit}
