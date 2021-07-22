@@ -27,7 +27,7 @@ export default function List({
           <li id={id} className={style}>
             {isEdit ? (
               <>
-                <Button text="save" onClick={saveEdit(id)} />
+                <Button text="Save" onClick={saveEdit(id)} />
                 <Input type="text" value={editedTodo} onChange={editTodo} />
               </>
             ) : (
