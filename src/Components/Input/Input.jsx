@@ -2,36 +2,31 @@ import React from "react";
 import classNames from "classnames";
 
 const style = classNames(
+  "bg-gray-600",  
   "outline-none",
   "p-2",
-  "text-red-600"
+  "text-red-600",
+  "bg-transparent"
   // "w-96"
 );
 
-export default class Input extends React.Component {
-  state = {
-    value: "",
-  };
-
-  handleChange = ({ target }) => {
-    // e.stopPropagation();
-    this.setState({ value: target.value });
-    this.props.onChange(target.value);
-  };
-
-  render() {
-    const { type, name, placeholder, onClick, value, onChange } = this.props;
-    // const { value: stateValue } = this.state;
-    return (
-      <input
-        className={style}
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        onClick={onClick}
-        value={value}
-        onChange={onChange}
-      />
-    );
-  }
+export default function Input({
+  type,
+  name,
+  placeholder,
+  onClick,
+  value,
+  onChange,
+}) {
+  return (
+    <input
+      className={style}
+      type={type}
+      name={name}
+      placeholder={placeholder}
+      onClick={onClick}
+      value={value}
+      onChange={onChange}
+    />
+  );
 }
