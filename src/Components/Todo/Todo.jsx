@@ -7,7 +7,7 @@ const titleCSS = classNames("text-red-600", "p-6", "mt-8", "text-5xl");
 
 export default class Todo extends React.Component {
   state = {
-    todos: [],
+    todos: JSON.parse(localStorage.getItem("todos")),
     todoInput: "",
   };
 
@@ -35,14 +35,13 @@ export default class Todo extends React.Component {
   };
 
   handleEdit = (id, text) => (e) => {
-    e.stopPropagation();    
+    e.stopPropagation();
     this.setState(({ todos, todoInput }) => ({
       todos: todos.map((item) =>
         item.id === id ? { ...item, isEdit: !item.isEdit } : item
       ),
-      editedTodo: text
+      editedTodo: text,
     }));
-
   };
 
   handleComplete = (id) => (e) => {
@@ -66,7 +65,9 @@ export default class Todo extends React.Component {
   };
 
   render() {
-    const {editedTodo, todoInput, todos } = this.state;
+    const { editedTodo, todoInput, todos } = this.state;
+    localStorage.setItem("todos", JSON.stringify(todos ? todos : []));
+
     return (
       <>
         <h1 className={titleCSS}>ToDo</h1>
