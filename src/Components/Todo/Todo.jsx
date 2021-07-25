@@ -117,7 +117,7 @@ export default class Todo extends React.Component {
           ))}
         </div>
         <List
-          todos={filteredTodos}
+          items={filteredTodos}
           editedTodo={editedTodo}
           complete={this.handleComplete}
           editTodo={this.handleEditTodo}

@@ -4,7 +4,7 @@ import Button from "../Button/Button";
 import Input from "../Input/Input";
 
 export default function List({
-  todos,
+  items,
   editedTodo,
   deleteItem,
   complete,
@@ -14,7 +14,7 @@ export default function List({
 }) {
   return (
     <ul>
-      {todos.map(({ text, id, isComplete, isEdit }) => {
+      {items.map(({ text, id, isComplete, isEdit }) => {
         const style = classNames(
           "bg-gray-600",
           "m-4",
